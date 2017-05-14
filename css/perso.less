@@ -4,8 +4,8 @@
 
 @media (max-width: 479px) {
 	.page_sommaire .wrapper {
-		margin-left: -20px;
-		margin-right: -20px;
+		margin-left: -@grid-gutter-width / 2;
+		margin-right: -@grid-gutter-width / 2;
 	}
 }
 
@@ -47,6 +47,7 @@
 			display: block;
 			background: transparent;
 			border: 0;
+			z-index: 10;
 			span {
 				display: block;
 				position: absolute;
@@ -57,9 +58,9 @@
 				left: 50%;
 				margin-top: -10px;
 			}
-			.opacity(0.5);
+			.opacity(0.6);
 			&:hover {
-				background: rgba(0,0,0,0.1);
+				background: rgba(0,0,0,0.2);
 				.opacity(1);
 			}
 		}
@@ -83,6 +84,11 @@
 			left: 0;
 			z-index: 10;
 			width: 100%;
+		}
+		.player-rwd-container {
+			display: inline-block;
+			width: 100%;
+			max-width: 600px;
 		}
 	}
 	.mejs__container {

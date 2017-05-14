@@ -101,8 +101,6 @@ jQuery(function() {
 	function play_sound(link) {
 		var src = link.attr('href').replace('&amp;', '&');
 		src = src.replace('//m\.youtu','//www\.youtu');
-		console.log('play_sound');
-		console.log(src);
 		player.setSrc(src);
 		player.load();
 		player.play();
@@ -154,7 +152,8 @@ jQuery(function() {
 		// on lance mediaplayer
 		jQuery('#player').mediaelementplayer({
 				pluginPath: 'squelette/mediaelement/build/',
-				"alwaysShowControls": "true",
+				alwaysShowControls: true,
+				stretching: 'responsive',
 				success:function(p,node) {
 					player = p;
 					player.addEventListener('ended',play_next_sound);
