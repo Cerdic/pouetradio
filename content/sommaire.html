@@ -5,46 +5,16 @@
 </div>
 
 <div class='player-wrapper'>
-<video id='player' widh="480" height="320" preload="none">
-<!--<source src="http://clips.vorwaerts-gmbh.de/big_buck_bunny.mp4" type="video/mp4">-->
-</video>
+	<video id='player' widh="480" height="320" preload="none">
+	<!--<source src="http://clips.vorwaerts-gmbh.de/big_buck_bunny.mp4" type="video/mp4">-->
+	</video>
 </div>
 
 [<p class='pagination'><a class='btn' href="#URL_SITE_SPIP">(#ENV{recherche}|?{Tout afficher})</a></p>]
+
 <INCLURE{fond=inclure/pouets,env,ajax} />
 
-[<style>(#REM) INCLURE{#CHEMIN{players/mejs/mejs-feature-playlist.css}|url_absolue_css})</style>]
-[<style>(#REM) INCLURE{#CHEMIN{css/playliste.css}|url_absolue_css})</style>]
-<style>
-.player-wrapper {text-align:center;background:#333;}
-.mejs__container {margin:0 auto;}
-.tags .invisible {display:none;}
-.oembed,.spip_documents.oembed,.oembed_mastodon .oe-rich {margin-top:0;margin-bottom:0}
-.oembed_mastodon .oe-rich {border-radius:0;border-top: 1px solid #ddd;}
-.oembed blockquote {border:0;}
-.pouetradio .item {border:0;padding:0;}
-.pagination {text-align:center;}
-a.playing {
-	background:#9baec8 !important;
-	color:#fff !important;
-	box-shadow:0 0 8px #9baec8;
-}
-.item.playing {
-	position:relative;
-	box-shadow: 0 0 8px #9baec8;
-	z-index:2;
-}
-@media (max-width:479px) {
-	.page_sommaire .wrapper {
-		margin-left:-20px;
-		margin-right:-20px;
-	}
-}
-#formulaire_recherche {margin-bottom:10px;margin-top:-10px;}
-#formulaire_recherche label {color:#ddd;}
-.readme { margin-top:-2em;margin-bottom:1em;}
-</style>
-<script src="#CHEMIN{mediaelement/build/mediaelement-and-player.min.js}"></script>
-<script src="#CHEMIN{mediaelement/build/lang/fr.js}"></script>
-[<script src="(#CHEMIN{pouetradio.js}|timestamp)"></script>]
+[<script src="(#CHEMIN{mediaelement/build/mediaelement-and-player.min.js}|timestamp)"></script>]
+[<script src="(#CHEMIN{mediaelement/build/lang/fr.js}|timestamp)"></script>]
+[<script src="(#CHEMIN{javascript/pouetradio.js}|timestamp)"></script>]
 <link rel="stylesheet" href="#CHEMIN{mediaelement/build/mediaelementplayer.min.css}">

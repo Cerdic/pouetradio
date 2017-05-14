@@ -1,0 +1,55 @@
+// si on a un fichier variables.less BS2, faire un mapping des variables BS3 dessus
+// on predefinit @bodyBackground pour voir si il va etre surcharge par une couleur
+// dans ce cas c'est un fichier de variables BS2 a convertir, on importe css/variables-bs2tobs3.less
+@bodyBackground:0;
+@bs-variables-version:3;
+@import "css/variables.less";
+.translate_variables() when (iscolor(@bodyBackground)) {
+	@import "css/variables-translatebs2.less";
+	@bs-variables-version:2;
+}
+.translate_variables() when (@bodyBackground=0){
+	@paddingLarge : @padding-large-vertical @padding-large-horizontal;
+	@paddingSmall: @padding-small-vertical @padding-small-horizontal;
+	@paddingMini: @padding-xs-vertical @padding-xs-horizontal;
+
+	@gridColumnWidth: @container-md / @grid-columns - @grid-gutter-width;
+	@gridColumnWidth768: @container-sm / @grid-columns - @grid-gutter-width;
+	@gridColumnWidth1200: @container-lg / @grid-columns - @grid-gutter-width;
+}
+
+.translate_variables();
+
+// Compatibilite mini BS2/BS3
+.border-radius(@border-radius) {
+	border-radius: @border-radius;
+}
+
+// Sprite icons path
+// -------------------------
+@iconSpritePath:          "../img/glyphicons-halflings.png";
+@iconWhiteSpritePath:     "../img/glyphicons-halflings-white.png";
+
+
+// Extension de BS3
+@screen-xxs-max: (@screen-xs-min - 1);
+
+
+// Typo SPIP
+@emFontSize : 1em * (@font-size-base / 16);
+@emLineHeight : 1em * (@line-height-base);
+@emVertMargin : @emLineHeight;
+
+@indentStep : (@container-md / @grid-columns) / 2;
+@indentStep1200 : (@container-lg / @grid-columns) / 2;
+@indentStep768 : (@container-sm / @grid-columns) / 2;
+
+@font-size-large-em : 1em * @font-size-large / @font-size-base;
+@font-size-small-em : 1em * @font-size-small / @font-size-base;
+@font-size-h1-em: 1em * @font-size-h1 / @font-size-base;
+@font-size-h2-em: 1em * @font-size-h2 / @font-size-base;
+@font-size-h3-em: 1em * @font-size-h3 / @font-size-base;
+@font-size-h4-em: 1em * @font-size-h4 / @font-size-base;
+@font-size-h5-em: 1em * @font-size-h5 / @font-size-base;
+@font-size-h6-em: 1em * @font-size-h6 / @font-size-base;
+
