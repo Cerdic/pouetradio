@@ -4,13 +4,17 @@
 [(#ENV{recherche}|match{^@}|oui) [(#SET{rech_aut,[%users/(#ENV{recherche}|trim{@})/%]})] ]
 [(#ENV{recherche}|et{#ENV{recherche}|match{^@}|non}) [(#SET{rech_texte,[%(#ENV{recherche})%]})] ]
 #SET{last,0}
+#SET{first,0}
 <B_items>
 	#ANCRE_PAGINATION
+	[(#ENV{debut_pouets}|non)
+	<a class="refresh-link ajax" href="[(#SELF|parametre_url{avant_pouet,#GET{first}})]">refresh</a>]
 	<BOUCLE_items(SYNDIC_ARTICLES)
 		{!par date}{!par id_syndic_article}
 		{url like #GET{rech_aut}}
 		{descriptif like #GET{rech_texte}}
 		{pagination 20}
+		{avant_pouet #ENV{avant_pouet}}
 		{apres_pouet #ENV{debut_pouets}}
 		{tags like '%youtu%'}>
 		#SET{url,#TAGS|extraire_balise{a}|extraire_attribut{href}}
@@ -18,9 +22,9 @@
 			<span class="anchor" id="item#ID_SYNDIC_ARTICLE"></span>
 			#MODELE{oembed,url=#URL}
 		</div>
-		#SET{last,#ID_SYNDIC_ARTICLE}
+		#SET{last,#ID_SYNDIC_ARTICLE}[(#GET{first}|non) #SET{first,#ID_SYNDIC_ARTICLE}]
 	</BOUCLE_items>
-	[(#GRAND_TOTAL|>{#TOTAL_BOUCLE}|oui)
+	[(#GRAND_TOTAL|>{#TOTAL_BOUCLE}|et{#ENV{avant_pouet}|non}|oui)
 		<div class='pagination more'>
 			<ul class="pager">
 				[<li
