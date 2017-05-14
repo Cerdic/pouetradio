@@ -13,6 +13,7 @@
 		{tags like '%youtu%'}>
 		#SET{url,#TAGS|extraire_balise{a}|extraire_attribut{href}}
 		<div class="item track">
+			<span class="anchor" id="item#ID_SYNDIC_ARTICLE"></span>
 			#MODELE{oembed,url=#URL}
 		</div>
 	</BOUCLE_items>

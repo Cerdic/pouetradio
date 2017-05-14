@@ -4,10 +4,14 @@
 	<a href="#URL_ARTICLE{1}">#INFO_TITRE{article,1}</a>
 </div>
 
-<div class='player-wrapper'>
-	<video id='player' widh="480" height="320" preload="none">
-	<!--<source src="http://clips.vorwaerts-gmbh.de/big_buck_bunny.mp4" type="video/mp4">-->
-	</video>
+<div class="affix-placeholder">
+	<div class='player-wrapper' data-spy="affix" data-offset-top="100">
+		<button class="prev"><span></span></button>
+		<video id='player' widh="480" height="320" preload="none">
+		<!--<source src="http://clips.vorwaerts-gmbh.de/big_buck_bunny.mp4" type="video/mp4">-->
+		</video>
+		<button class="next"><span></span></button>
+	</div>
 </div>
 
 [<p class='pagination'><a class='btn' href="#URL_SITE_SPIP">(#ENV{recherche}|?{Tout afficher})</a></p>]

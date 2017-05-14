@@ -1,34 +1,145 @@
+@import "css/variables.less";
+@import "css/spip.variables.less";
+@import "css/mixins.less";
+
+@media (max-width: 479px) {
+	.page_sommaire .wrapper {
+		margin-left: -20px;
+		margin-right: -20px;
+	}
+}
+
+#formulaire_recherche {
+	margin-bottom: 10px;
+	margin-top: -10px;
+	label {
+		color: #ddd;
+	}
+}
+
+
 .primary {
+
+	// readme link on home
+	.readme {
+		margin-top: -2em;
+		margin-bottom: 1em;
+	}
+
+	// readme page
 	.cartouche {
 		.publication {
-			display:none;
+			display: none;
 		}
 	}
-}
-.player-wrapper {text-align:center;background:#333;}
-.mejs__container {margin:0 auto;}
-.tags .invisible {display:none;}
-.oembed,.spip_documents.oembed,.oembed_mastodon .oe-rich {margin-top:0;margin-bottom:0}
-.oembed_mastodon .oe-rich {border-radius:0;border-top: 1px solid #ddd;}
-.oembed blockquote {border:0;}
-.pouetradio .item {border:0;padding:0;}
-.pagination {text-align:center;display: block;}
-a.playing {
-	background:#9baec8 !important;
-	color:#fff !important;
-	box-shadow:0 0 8px #9baec8;
-}
-.item.playing {
-	position:relative;
-	box-shadow: 0 0 8px #9baec8;
-	z-index:2;
-}
-@media (max-width:479px) {
-	.page_sommaire .wrapper {
-		margin-left:-20px;
-		margin-right:-20px;
+
+	// Player
+	.player-wrapper {
+		text-align: center;
+		background: #333;
+		position: relative;
+		.prev,.next {
+			position: absolute;
+			top:20px;
+			bottom:20px;
+			width: 100px;
+			max-width: 40%;
+			display: block;
+			background: transparent;
+			border: 0;
+			span {
+				display: block;
+				position: absolute;
+				width: 20px;
+				height: 20px;
+				border: 20px solid transparent;
+				top:50%;
+				left: 50%;
+				margin-top: -10px;
+			}
+			.opacity(0.5);
+			&:hover {
+				background: rgba(0,0,0,0.1);
+				.opacity(1);
+			}
+		}
+		.prev {
+			left: 0;
+			span {
+				border-right: 20px solid @gray-light;
+				margin-left: -30px;
+			}
+		}
+		.next {
+			right: 0;
+			span {
+				border-left: 20px solid @gray-light;
+				margin-left: -10px;
+			}
+		}
+		&.affix {
+			position: fixed;
+			top:0;
+			left: 0;
+			z-index: 10;
+			width: 100%;
+		}
 	}
+	.mejs__container {
+		margin: 0 auto;
+	}
+
+	// pouet list
+	.pouetradio .item {
+		overflow: visible;
+		border: 0;
+		padding: 0;
+		position: relative;
+	}
+
+	.pagination {
+		text-align: center;
+		display: block;
+	}
+
+
+	// pouets
+	.item > .anchor {
+		position: absolute;
+		top:-300px;
+		display: block;
+		width: 1px;
+		height: 1px;
+		left: 0;
+	}
+	.tags .invisible {
+		display: none;
+	}
+	.oembed, .spip_documents.oembed, .oembed_mastodon .oe-rich {
+		margin-top: 0;
+		margin-bottom: 0
+	}
+
+	.oembed_mastodon .oe-rich {
+		border-radius: 0;
+		border-top: 1px solid #ddd;
+	}
+
+	.oembed blockquote {
+		border: 0;
+	}
+
+	a.playing {
+		background: #9baec8 !important;
+		color: #fff !important;
+		box-shadow: 0 0 8px #9baec8;
+	}
+
+	.item.playing {
+		position: relative;
+		box-shadow: 0 0 8px #9baec8;
+		z-index: 2;
+	}
+
 }
-#formulaire_recherche {margin-bottom:10px;margin-top:-10px;}
-#formulaire_recherche label {color:#ddd;}
-.readme { margin-top:-2em;margin-bottom:1em;}
+
