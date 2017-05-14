@@ -1,0 +1,15 @@
+#CACHE{150}
+[(#HTTP_HEADER{Content-type: text/xml[; charset=(#CHARSET)]})]<?xml
+version="1.0"[ encoding="(#CHARSET)"]?>
+
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+	<title>[#(#ENV{tag}|textebrut|texte_backend)]</title>
+	<subtitle>[#(#ENV{tag}|textebrut|texte_backend)]</subtitle>
+	<link href="https://mamot.fr/tags/#ENV{tag}"/>
+
+	<BOUCLE_pour(POUR){tableau #ENV{tag}|explode{','}}>
+	[(#VAL{https://mamot.fr/tags/#VALEUR}|masto_tag2rssitems)]
+	</BOUCLE_pour>
+
+</feed>
