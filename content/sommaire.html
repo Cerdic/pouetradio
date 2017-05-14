@@ -12,9 +12,7 @@
 
 [<p class='pagination'><a class='btn' href="#URL_SITE_SPIP">(#ENV{recherche}|?{Tout afficher})</a></p>]
 
-<INCLURE{fond=inclure/pouets,env,ajax} />
+<div class="liste-items pouetradio" id="pouetradio">
+	<INCLURE{fond=inclure/pouets,env,ajax} />
+</div>
 
-[<script src="(#CHEMIN{mediaelement/build/mediaelement-and-player.min.js}|timestamp)"></script>]
-[<script src="(#CHEMIN{mediaelement/build/lang/fr.js}|timestamp)"></script>]
-[<script src="(#CHEMIN{javascript/pouetradio.js}|timestamp)"></script>]
-<link rel="stylesheet" href="#CHEMIN{mediaelement/build/mediaelementplayer.min.css}">

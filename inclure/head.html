@@ -1,0 +1,64 @@
+[(#REM)
+	Head standard de toutes les pages ; les elements specifiques
+	(title, description) figurent dans le squelette article.html
+]
+[(#REM) Preciser le charset ]
+<meta http-equiv="Content-Type" content="text/html; charset=#CHARSET" />
+
+[(#REM) Fierement fabrique avec SPIP ]
+<meta name="generator" content="SPIP[ (#SPIP_VERSION)]" />
+
+[(#REM) Lien vers le flux RSS du site ]
+[<link rel="alternate" type="application/rss+xml" title="<:syndiquer_site:>" href="(#URL_PAGE{backend})" />]
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+[<link rel="stylesheet" href="(#CSS{css/font.css})" type="text/css" />]
+[<link rel="stylesheet" href="(#CSS{css/bootstrap.css})" type="text/css" />]
+[<link rel="stylesheet" href="(#CSS{css/responsive.css})" type="text/css" />]
+[<link rel="stylesheet" href="(#CSS{css/box.css})" type="text/css" />]
+[<link rel="stylesheet" href="(#CSS{css/box_skins.css})" type="text/css" />]
+
+[<link rel="stylesheet" href="(#CSS{css/spip.css})" type="text/css" />]
+[<link rel="stylesheet" href="(#REM) CSS{css/spip.comment.css})" type="text/css" />]
+[<link rel="stylesheet" href="(#CSS{css/spip.list.css})" type="text/css" />]
+[<link rel="stylesheet" href="(#REM) CSS{css/spip.petition.css})" type="text/css" />]
+[<link rel="stylesheet" href="(#CSS{css/spip.pagination.css})" type="text/css" />]
+[<link rel="stylesheet" href="(#CHEMIN{mediaelement/build/mediaelementplayer.css}|timestamp)">]
+
+[(#REM) Balise permettant aux plugins d'inserer des fichiers CSS ]
+#INSERT_HEAD_CSS
+
+[<link rel="stylesheet" href="(#CSS{css/spipr_dist.css})" type="text/css" />]
+
+
+[(#REM) Feuille de style du theme]
+[<link rel="stylesheet" href="(#CSS{css/theme.css})" type="text/css" />]
+
+[(#REM) Feuille de style CSS pour l'impression, n'existe pas par defaut ]
+[<link rel="stylesheet" href="(#CSS{css/print.css})" type="text/css" media="print" />]
+
+[(#CHEMIN{inc-theme-head.html}|oui)
+#INCLURE{fond=inc-theme-head,env}
+]
+
+[(#REM) Feuille de style personnalisee pour surcharger les precedentes
+	A noter par defaut cette css n'existe pas
+]
+[<link rel="stylesheet" href="(#CSS{css/perso.css})" type="text/css" />]
+
+[(#REM) Balise permettant aux plugins d'inserer des appels javascript ou css ;
+	C'est ici que SPIP va inserer l'appel de la librairie jQuery
+	Et appeler a la fin compacte_head pour agreger et compacter tout le head dans des fichiers statiques
+	si l'option est cochee dans Configuration
+]
+#INSERT_HEAD
+[<script type="text/javascript" src="(#CHEMIN{js/bootstrap-collapse.js}|timestamp)"></script>]
+[<script type="text/javascript" src="(#CHEMIN{js/bootstrap-affix.js}|timestamp)"></script>]
+[<script src="(#CHEMIN{mediaelement/build/mediaelement-and-player.min.js}|timestamp)"></script>]
+[<script src="(#CHEMIN{mediaelement/build/lang/fr.js}|timestamp)"></script>]
+[<script src="(#CHEMIN{javascript/pouetradio.js}|timestamp)"></script>]
+<!--[if lt IE 9]>
+[<script src="(#CHEMIN{js/html5.js})"></script>]
+[<script src="(#CHEMIN{js/respond.min.js})"></script>]
+<![endif]-->
+

@@ -5,31 +5,16 @@
 [(#ENV{recherche}|et{#ENV{recherche}|match{^@}|non}) [(#SET{rech_texte,[%(#ENV{recherche})%]})] ]
 <B_items>
 #ANCRE_PAGINATION
-	[(#REM) INCLURE**{fond=inclure/player,
-	url_document=#GET{url_first},
-	mime_type='video/youtube',
-	player=mejs,
-	largeur=1000,
-	playlist=radio,
-	features=#LISTE{'playlistfeature', 'prevtrack', 'playpause', 'nexttrack', 'loop', 'shuffle', 'playlist', 'current', 'progress', 'duration', 'volume'},
-	plugins=#ARRAY{youtube,youtube,playlist,#CHEMIN{players/mejs/mejs-feature-playlist.min.js}|timestamp},
-	})]
-
-<ul class="liste-items pouetradio" id="pouetradio">
 	<BOUCLE_items(SYNDIC_ARTICLES)
 		{!par date}
 		{url like #GET{rech_aut}}
 		{descriptif like #GET{rech_texte}}
 		{pagination 20}
 		{tags like '%youtu%'}>
-	#SET{url,#TAGS|extraire_balise{a}|extraire_attribut{href}}
-	[(#GET{url_first}|non) #SET{url_first,#GET{url}}]
-	<li class="item track"
-		[data-url="(#GET{url})"]
-		title="[(#DESCRIPTIF|couper{60}|attribut_html)]">
-		#MODELE{oembed,url=#URL}
-	</li>
+		#SET{url,#TAGS|extraire_balise{a}|extraire_attribut{href}}
+		<div class="item track">
+			#MODELE{oembed,url=#URL}
+		</div>
 	</BOUCLE_items>
-</ul>
 [<div class='pagination'>(#PAGINATION)</div>]
 </B_items>

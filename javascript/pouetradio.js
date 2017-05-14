@@ -1,32 +1,77 @@
 jQuery(function() {
 
-	var player;
-	var videolinks = jQuery('a[href*="youtu"]');
-	if (videolinks.length) {
-		var first = videolinks.eq(0);
-		var source = jQuery('<source src="'+first.attr('href')+'" type="video/youtube">');
-		jQuery('#player').append(source);
-		first.addClass('playing').closest('.item').addClass('playing');
+	function sound_links_selector() {
+		return 'a[href*="youtu"]';
 	}
 
-	jQuery('#player').mediaelementplayer({
-		pluginPath: 'squelette/mediaelement/build/',
-		"alwaysShowControls": "true"
-	}).each(function(){player = jQuery(this).data('mediaelementplayer')});
-	console.log(player);
+	function find_all_sound_links() {
+		var soundlinks = jQuery(sound_links_selector());
+		return soundlinks;
+	}
 
+	function find_next_sound() {
+		var soundlinks = find_all_sound_links();
+		if (!soundlinks.length) {
+			return soundlinks;
+		}
+		var playing = soundlinks.find('.playing');
+		if(!playing.length) {
+			return soundlinks.eq(0);
+		}
+		// TODO : trouver le lien en cours de lecture, puis prendre le suivant
+		// si c'est le dernier dans l'ordre dapparition dans le HTML, on reprend le premier not played
+		return soundlinks.eq(0);
+	}
 
-        jQuery('#content').on('click','a[href*="youtu"]',function(){
-		var src = jQuery(this).attr('href').replace('&amp;', '&');
+	function set_sound_playing(link) {
+		jQuery('a.playing').removeClass('playing');
+		link
+			.addClass('playing')
+			.closest('.item')
+			.addClass('playing')
+			.siblings('.playing')
+			.removeClass('playing');
+		// si le lien est encore en lecture au bout de 2s on le marque comme lu
+		setTimeout(function(){if (link.is('.playing')) link.addClass('played');}, 2000);
+	}
+
+	function play_sound(link) {
+		var src = link.attr('href').replace('&amp;', '&');
 		player.setSrc(src);
 		player.load();
 		player.play();
+		set_sound_playing(link);
+	}
 
-		jQuery('a.playing').removeClass('playing');
-		jQuery(this).addClass('playing').closest('.item').addClass('playing').siblings('.item.playing').removeClass('playing');
+	// sur les pages qui ont un player uniquement
+	if (jQuery('#player').length) {
 
-        	return false;
-        })
+		// initialiser le player
+		var player;
+		// on y met le premier son de la page
+		var soundlinks = find_next_sound();
+		if (soundlinks.length) {
+			var source = jQuery('<source src="'+soundlinks.attr('href')+'" type="video/youtube">');
+			jQuery('#player').append(source);
+			set_sound_playing(soundlinks);
+		}
+
+		// on lance mediaplayer
+		jQuery('#player').mediaelementplayer({
+				pluginPath: 'squelette/mediaelement/build/',
+				"alwaysShowControls": "true"
+			})
+			.each(function(){
+				player = jQuery(this).data('mediaelementplayer')
+			});
+
+		// on rend tous les liens clicables
+		jQuery('#content').on('click',sound_links_selector(),function(){
+			play_sound(jQuery(this));
+      return false;
+    });
+
+	}
 
 });
 
