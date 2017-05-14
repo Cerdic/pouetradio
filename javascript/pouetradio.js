@@ -31,8 +31,8 @@ jQuery(function() {
 			.addClass('playing')
 			.siblings('.playing')
 			.removeClass('playing');
-		// si le lien est encore en lecture au bout de 2s on le marque comme lu
-		setTimeout(function(){if (link.is('.playing')) link.addClass('played');}, 2000);
+		// si le lien est encore en lecture au bout de 5s on le marque comme lu
+		setTimeout(function(){if (link.is('.playing')) link.addClass('played');}, 5000);
 	}
 
 	function play_sound(link) {
