@@ -1,4 +1,17 @@
+/* Pagination infinie manuelle */
+function pagination_more_loading(url,href,options) {
+	jQuery(this)
+		.find('.pagination.more')
+		.append('<div class="bubblingG"><span id="bubblingG_1"></span><span id="bubblingG_2"></span><span id="bubblingG_3"></span></div>')
+		.animateLoading();
+}
+function pagination_more_loaded(c, href, history) {
+	jQuery(this).find('.pagination.more').remove();
+	jQuery(this).append(c);
+}
+
 jQuery(function() {
+	// affix player
 	var affix_height = jQuery('.affix-placeholder').innerHeight();
 	jQuery('.affix-placeholder')
 		.children()
@@ -7,6 +20,13 @@ jQuery(function() {
 			jQuery(this).parent().css('min-height',h+'px');
 			affix_height = h;
 		});
+
+
+	jQuery('.pagination.more')
+		.closest('div.ajaxbloc')
+		.attr('data-loading-callback','pagination_more_loading')
+		.attr('data-loaded-callback','pagination_more_loaded');
+
 
 	var played_history = []
 
@@ -28,7 +48,7 @@ jQuery(function() {
 		if(!playing.length) {
 			return soundlinks.eq(0);
 		}
-		// TODO : trouver le lien en cours de lecture, puis prendre le suivant
+		// trouver le lien en cours de lecture, puis prendre le suivant
 		// si c'est le dernier dans l'ordre d'apparition dans le HTML, on reprend le premier not played
 		for (var i=0;i<soundlinks.length;i++) {
 			if (soundlinks.eq(i).is('.playing')){
@@ -36,8 +56,15 @@ jQuery(function() {
 			}
 		}
 		var ignore_played = false;
-		if (!soundlinks.not('.played').length) {
+		var to_play = soundlinks.not('.played');
+		if (!to_play.length) {
 			ignore_played = true;
+		}
+		// charger la suite si possible, pour le prochain morceau
+		if (to_play.length<=1) {
+			setTimeout(function(){
+				to_play.eq(0).closest('.item').siblings('.pagination.more').eq(0).find('.lien_pagination').eq(0).click();
+			}, 1000);
 		}
 		i++;
 		while(i<soundlinks.length) {

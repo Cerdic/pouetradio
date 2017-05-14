@@ -1,0 +1,7 @@
+<p class="colophon">
+<BOUCLE_annee(ARTICLES){par date}{0,1}>[(#DATE|annee|!={#VAL{Y}|date}|oui)[(#DATE|annee)]]</BOUCLE_annee>-</B_annee>[(#DATE|annee) ] &mdash; #NOM_SITE_SPIP<br />
+	[Version (#VAL{_POUET_RADIO_VERSION}|constant)]
+<span class="sep"> |
+</span><a href="#URL_PAGE{backend}" rel="alternate" title="<:syndiquer_site:>">[(#CHEMIN{feed.png}|balise_img{<:icone_suivi_activite:>})]&nbsp;RSS&nbsp;2.0</a>
+</p>
+<small class="generator"><a href="http://www.spip.net/" rel="generator" title="<:site_realise_avec_spip:>" class="spip_out">[(#CHEMIN{spip.png}|balise_img{SPIP})]</a></small>

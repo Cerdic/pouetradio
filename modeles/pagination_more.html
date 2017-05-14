@@ -1,0 +1,21 @@
+#ENV*{bloc_ancre}
+#SET{bornes,#ENV{page_courante}|bornes_pagination{#ENV{nombre_pages},10}}
+#SET{premiere, #GET{bornes}|reset}
+#SET{derniere, #GET{bornes}|end}
+#SET{sep,#ENV{separateur,' | '}}
+#SET{class,'lien_pagination more'}[(#ENV{preload}|oui)#SET{class,#GET{class}|concat{' preload'}]
+<ul class="pager">
+	[
+
+	(#SET{item, #ENV{page_courante}|mult{#ENV{pas}} })
+
+	][(#ENV{page_courante}|>={#ENV{nombre_pages}}|non)
+	[<li
+	class="next[(#ENV{page_courante}|>={#ENV{nombre_pages}}|oui)disabled]">(#ENV{url_suivant,#ENV{url}
+	|parametre_url{#ENV{debut},#GET{item}|?{#GET{item}}}}
+	|ancre_url{#ENV{ancre}}
+	|lien_ou_expose{#ENV{label_suivant,<:page_more:>},#ENV{page_courante}|>={#ENV{nombre_pages}}|?{span},#GET{class},'',nofollow}
+	|inserer_attribut{rel,next}
+	)</li>]
+	]
+</ul>
