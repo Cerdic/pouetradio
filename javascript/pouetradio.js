@@ -145,7 +145,7 @@ jQuery(function() {
 			set_sound_playing(soundlink);
 		}
 
-		jQuery('#player')
+		jQuery('#player').parent()
 			.siblings('.next').on('click',play_next_sound)
 			.siblings('.prev').on('click',play_prev_sound);
 
