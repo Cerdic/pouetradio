@@ -30,7 +30,7 @@ jQuery(function() {
 		}
 		// TODO : trouver le lien en cours de lecture, puis prendre le suivant
 		// si c'est le dernier dans l'ordre d'apparition dans le HTML, on reprend le premier not played
-		for (var i=0;i<playing.length;i++) {
+		for (var i=0;i<soundlinks.length;i++) {
 			if (soundlinks.eq(i).is('.playing')){
 				break;
 			}
@@ -73,7 +73,9 @@ jQuery(function() {
 
 	function play_sound(link) {
 		var src = link.attr('href').replace('&amp;', '&');
-		src.replace('//m.youtu','//www.youtu');
+		src = src.replace('//m\.youtu','//www\.youtu');
+		console.log('play_sound');
+		console.log(src);
 		player.setSrc(src);
 		player.load();
 		player.play();
@@ -125,10 +127,11 @@ jQuery(function() {
 		// on lance mediaplayer
 		jQuery('#player').mediaelementplayer({
 				pluginPath: 'squelette/mediaelement/build/',
-				"alwaysShowControls": "true"
-			})
-			.each(function(){
-				player = jQuery(this).data('mediaelementplayer')
+				"alwaysShowControls": "true",
+				success:function(p,node) {
+					player = p;
+					player.addEventListener('ended',play_next_sound);
+				}
 			});
 
 		// on rend tous les liens clicables
