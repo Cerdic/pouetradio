@@ -1,6 +1,6 @@
 <?php
 
-define('_POUET_RADIO_VERSION','0.2');
+define('_POUET_RADIO_VERSION','0.2.1');
 
 
 $GLOBALS['spip_pipeline']['post_syndication'] .= '|pouet_post_syndication';
@@ -28,5 +28,6 @@ function pouet_reload_home() {
 	chdir(_ROOT_CWD);
 	recuperer_fond('content/home',array());
 }
+
 
 define('_PERIODE_SYNDICATION', 3);

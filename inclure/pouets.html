@@ -3,19 +3,34 @@
 #SET{rech_aut,'%'}#SET{rech_texte,%}
 [(#ENV{recherche}|match{^@}|oui) [(#SET{rech_aut,[%users/(#ENV{recherche}|trim{@})/%]})] ]
 [(#ENV{recherche}|et{#ENV{recherche}|match{^@}|non}) [(#SET{rech_texte,[%(#ENV{recherche})%]})] ]
+#SET{last,0}
 <B_items>
-#ANCRE_PAGINATION
+	#ANCRE_PAGINATION
 	<BOUCLE_items(SYNDIC_ARTICLES)
-		{!par date}
+		{!par date}{!par id_syndic_article}
 		{url like #GET{rech_aut}}
 		{descriptif like #GET{rech_texte}}
 		{pagination 20}
+		{apres_pouet #ENV{debut_pouets}}
 		{tags like '%youtu%'}>
 		#SET{url,#TAGS|extraire_balise{a}|extraire_attribut{href}}
 		<div class="item track">
 			<span class="anchor" id="item#ID_SYNDIC_ARTICLE"></span>
 			#MODELE{oembed,url=#URL}
 		</div>
+		#SET{last,#ID_SYNDIC_ARTICLE}
 	</BOUCLE_items>
-[<div class='pagination more'>(#PAGINATION{more})</div>]
+	[(#GRAND_TOTAL|>{#TOTAL_BOUCLE}|oui)
+		<div class='pagination more'>
+			<ul class="pager">
+				[<li
+				class="next">(#SELF
+					|parametre_url{debut_pouets,#GET{last}}
+					|ancre_url{pagination_items}
+					|lien_ou_expose{#ENV{label_suivant,<:page_more:>},'','lien_pagination more','',nofollow}
+					|inserer_attribut{rel,next}
+				)</li>]
+			</ul>
+		</div>
+	]
 </B_items>

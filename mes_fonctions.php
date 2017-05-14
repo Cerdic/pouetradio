@@ -51,3 +51,32 @@ function masto_url2item($url) {
 
 	return $item;
 }
+
+/**
+ * Critere pour recuperer les pouets apres le dernier de la page precedente
+ * en se basant sur son id et sa date
+ * sachant que des items ont pu etre ajoutes a la base entre temps
+ * (on ne peut donc pas se fier au nombre de resultats dans la boucle, qui peut changer d'une fois a l'autre)
+ * @param $idb
+ * @param $boucles
+ * @param $crit
+ */
+function critere_apres_pouet_dist($idb, &$boucles, $crit) {
+	$not = $crit->not;
+	$boucle = &$boucles[$idb];
+	$id = $boucle->primary;
+
+	$_id_syndic_article = "''";
+	if (isset($crit->param[0][0])) {
+		$_id_syndic_article = calculer_liste(array($crit->param[0][0]), array(), $boucles, $boucle->id_parent);
+	}
+
+	$champ_date = $boucle->id_table.'.date';
+
+	$_id_syndic_article = "(\$zid=$_id_syndic_article)";
+	$_date = "(\$zd=sql_getfetsel('date','spip_syndic_articles','id_syndic_article='.intval(\$zid)))";
+	$where = "'$champ_date<'.sql_quote(\$zd).' OR ($champ_date='.sql_quote(\$zd).' AND id_syndic_article<'.intval(\$zid).')'";
+	$where = "(($_id_syndic_article and $_date)?($where):'')";
+
+	$boucle->where[] = $where;
+}
