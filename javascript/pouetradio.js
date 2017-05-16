@@ -63,14 +63,9 @@ function find_next_sound() {
 	}
 	var playing = soundlinks.filter('.playing');
 	if(!playing.length) {
-		return soundlinks.eq(0);
-	}
-	// trouver le lien en cours de lecture, puis prendre le suivant
-	// si c'est le dernier dans l'ordre d'apparition dans le HTML, on reprend le premier not played
-	for (var i=0;i<soundlinks.length;i++) {
-		if (soundlinks.eq(i).is('.playing')){
-			break;
-		}
+		// on commence au 5e puis on remonte sur les plus recents, en comptant sur le refresh pour en avoir de nouveaux
+		// sinon on ira piocher dans les suivants en descendant
+		return soundlinks.eq(5);
 	}
 	var ignore_played = false;
 	var to_play = soundlinks.not('.played');
@@ -82,6 +77,20 @@ function find_next_sound() {
 		setTimeout(function(){
 			to_play.eq(0).closest('.item').siblings('.pagination.more').eq(0).find('.lien_pagination').eq(0).click();
 		}, 1000);
+	}
+	// trouver le lien en cours de lecture, puis prendre le precedent
+	// si c'est le dernier dans l'ordre d'apparition dans le HTML, on reprend le premier not played
+	var prev = null;
+	for (var i=0;i<soundlinks.length;i++) {
+		if (soundlinks.eq(i).is('.playing')){
+			break;
+		}
+		if (ignore_played || !soundlinks.eq(i).is('.played')) {
+			prev = soundlinks.eq(i);
+		}
+	}
+	if (prev) {
+		return prev;
 	}
 	i++;
 	while(i<soundlinks.length) {
