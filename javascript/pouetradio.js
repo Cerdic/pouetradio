@@ -1,6 +1,7 @@
 var played_history = []
 var affix_height = 0;
 var max_nb_refresh = 72; // 6H * 12
+var player;
 
 /* Pagination infinie manuelle */
 function pagination_more_loading(url,href,options) {
@@ -120,8 +121,6 @@ function set_sound_playing(link) {
 		.siblings('.playing')
 		.removeClass('playing');
 	played_history.push(link);
-	// si le lien est encore en lecture au bout de 5s on le marque comme lu
-	setTimeout(function(){if (link.is('.playing')) link.addClass('played');}, 5000);
 }
 
 function play_sound(link) {
@@ -129,14 +128,20 @@ function play_sound(link) {
 	src = src.replace('//m\.youtu','//www\.youtu');
 	player.setSrc(src);
 	player.load();
-	player.play();
 	set_sound_playing(link);
+	player.play();
 }
 
 function play_next_sound() {
 	var soundlink = find_next_sound();
 	play_sound(soundlink);
 	scroll_sound(soundlink);
+}
+function skip_to_next_sound() {
+	jQuery('a.playing')
+		.addClass('played')
+		.addClass('skiped');
+	play_next_sound();
 }
 
 function play_prev_sound() {
@@ -156,6 +161,13 @@ function scroll_sound(soundlink) {
 		jQuery.scrollTo('#'+id,400,{onAfter:function(){window.location.hash = id;}});
 
 	}
+}
+
+function check_sound_playing() {
+	var playing = jQuery('a.playing');
+	// si le lien est encore en lecture au bout de 5s on le marque comme lu
+	setTimeout(function(){if (playing.is('.playing') && !player.paused) playing.addClass('played');}, 5000);
+
 }
 
 jQuery(function() {
@@ -180,17 +192,18 @@ jQuery(function() {
 	if (jQuery('#player').length) {
 
 		// initialiser le player
-		var player;
 		// on y met le premier son de la page
 		var soundlink = find_next_sound();
 		if (soundlink.length) {
 			var source = jQuery('<source src="'+soundlink.attr('href')+'" type="video/youtube">');
 			jQuery('#player').append(source);
 			set_sound_playing(soundlink);
+			scroll_sound(soundlink);
+			setTimeout(function(){scroll_sound(soundlink);},4000);
 		}
 
 		jQuery('#player').parent()
-			.siblings('.next').on('click',play_next_sound)
+			.siblings('.next').on('click',skip_to_next_sound)
 			.siblings('.prev').on('click',play_prev_sound);
 
 		// on lance mediaplayer
@@ -201,6 +214,7 @@ jQuery(function() {
 				success:function(p,node) {
 					player = p;
 					player.addEventListener('ended',play_next_sound);
+					player.addEventListener('playing',check_sound_playing);
 				}
 			});
 
