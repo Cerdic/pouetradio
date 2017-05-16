@@ -75,7 +75,7 @@ function critere_apres_pouet_dist($idb, &$boucles, $crit) {
 
 	$_id_syndic_article = "(\$zid=$_id_syndic_article)";
 	$_date = "(\$zd=sql_getfetsel('date','spip_syndic_articles','id_syndic_article='.intval(\$zid)))";
-	$where = "'$champ_date<'.sql_quote(\$zd).' OR ($champ_date='.sql_quote(\$zd).' AND id_syndic_article<'.intval(\$zid).')'";
+	$where = "'($champ_date<'.sql_quote(\$zd).' OR ($champ_date='.sql_quote(\$zd).' AND id_syndic_article<'.intval(\$zid).'))'";
 	$where = "(($_id_syndic_article and $_date)?($where):'')";
 
 	$boucle->where[] = $where;
@@ -104,7 +104,7 @@ function critere_avant_pouet_dist($idb, &$boucles, $crit) {
 
 	$_id_syndic_article = "(\$zid=$_id_syndic_article)";
 	$_date = "(\$zd=sql_getfetsel('date','spip_syndic_articles','id_syndic_article='.intval(\$zid)))";
-	$where = "'$champ_date>'.sql_quote(\$zd).' OR ($champ_date='.sql_quote(\$zd).' AND id_syndic_article>'.intval(\$zid).')'";
+	$where = "'($champ_date>'.sql_quote(\$zd).' OR ($champ_date='.sql_quote(\$zd).' AND id_syndic_article>'.intval(\$zid).'))'";
 	$where = "(($_id_syndic_article and $_date)?($where):'')";
 
 	$boucle->where[] = $where;
