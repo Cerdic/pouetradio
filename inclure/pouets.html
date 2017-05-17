@@ -25,17 +25,21 @@
 		</div>
 		#SET{last,#ID_SYNDIC_ARTICLE}[(#GET{first}|non) #SET{first,#ID_SYNDIC_ARTICLE}]
 	</BOUCLE_items>
-	[(#GRAND_TOTAL|>{#TOTAL_BOUCLE}|et{#ENV{avant_pouet}|non}|oui)
-		<div class='pagination more'>
-			<ul class="pager">
-				[<li
-				class="next">(#SELF
-					|parametre_url{debut_pouets,#GET{last}}
-					|ancre_url{pagination_items}
-					|lien_ou_expose{#ENV{label_suivant,<:page_more:>},'','lien_pagination more','',nofollow}
-					|inserer_attribut{rel,next}
-				)</li>]
-			</ul>
-		</div>
+	[(#ENV{avant_pouet}|non)
+		[(#GRAND_TOTAL|>{#TOTAL_BOUCLE}|oui)
+			<div class='pagination more'>
+				<ul class="pager">
+					[<li
+					class="next">(#SELF
+						|parametre_url{debut_pouets,#GET{last}}
+						|ancre_url{pagination_items}
+						|lien_ou_expose{#ENV{label_suivant,<:page_more:>},'','lien_pagination more','',nofollow}
+						|inserer_attribut{rel,next}
+					)</li>]
+				</ul>
+			</div>
+		][(#GRAND_TOTAL|>{#TOTAL_BOUCLE}|non)
+			<div class='pagination more none'></div>
+		]
 	]
 </B_items>
