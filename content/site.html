@@ -1,9 +1,5 @@
 #CACHE{300}
-
-<div class="small center readme">
-	<a href="#URL_ARTICLE{1}">#INFO_TITRE{article,1}</a>
-</div>
-
+<BOUCLE_site(SYNDIC){id_syndic}>
 <div class="affix-placeholder">
 	<div class='player-wrapper' data-spy="affix" data-offset-top="100">
 		<button class="prev"><span></span></button>
@@ -16,9 +12,10 @@
 	</div>
 </div>
 
-[<p class='pagination'><a class='btn' href="#URL_SITE_SPIP">(#ENV{recherche}|?{Tout afficher})</a></p>]
+[<p class='pagination'><a class='btn' href="#URL_SYNDIC">(#ENV{recherche}|?{Tout afficher})</a></p>]
 
 <div class="liste-items pouetradio" id="pouetradio">
-	<INCLURE{fond=inclure/pouets,id_syndic=1,env,ajax} />
+	<INCLURE{fond=inclure/pouets,id_syndic,env,ajax} />
 </div>
 
+</BOUCLE_site>

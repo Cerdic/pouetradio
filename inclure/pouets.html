@@ -10,6 +10,7 @@
 	[(#ENV{debut_pouets}|non)
 	<a class="refresh-link ajax" href="[(#SELF|parametre_url{avant_pouet,#GET{first}})]">refresh</a>]
 	<BOUCLE_items(SYNDIC_ARTICLES)
+		{id_syndic?}
 		{!par date}{!par id_syndic_article}
 		{url like #GET{rech_aut}}
 		{descriptif like #GET{rech_texte}}
