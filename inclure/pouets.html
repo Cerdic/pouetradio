@@ -17,7 +17,7 @@
 		{pagination 20}
 		{avant_pouet #ENV{avant_pouet}}
 		{apres_pouet #ENV{debut_pouets}}
-		{tags like '%youtu%'}>
+		{filtre_tags}>
 		#SET{url,#TAGS|extraire_balise{a}|extraire_attribut{href}}
 		<div class="item track">
 			<span class="anchor" id="item#ID_SYNDIC_ARTICLE"></span>

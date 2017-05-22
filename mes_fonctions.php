@@ -109,3 +109,19 @@ function critere_avant_pouet_dist($idb, &$boucles, $crit) {
 
 	$boucle->where[] = $where;
 }
+
+function critere_filtre_tags($idb, &$boucles, $crit) {
+
+	$not = $crit->not;
+	$boucle = &$boucles[$idb];
+	$id = $boucle->primary;
+	$champ_tags = $boucle->id_table.'.tags';
+	$w = array();
+	$w[] = "($champ_tags LIKE '.sql_quote('%youtu%').')";
+	$w[] = "($champ_tags LIKE '.sql_quote('%vimeo%').')";
+	$w[] = "($champ_tags LIKE '.sql_quote('%dailymotion.com%').')";
+	$w[] = "($champ_tags LIKE '.sql_quote('%dai.ly%').')";
+
+	$w = "'(".implode(' OR ', $w).")'";
+	$boucle->where[] = $w;
+}

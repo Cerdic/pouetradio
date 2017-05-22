@@ -49,11 +49,12 @@ function refresh_pouets() {
 var refresher = setInterval(refresh_pouets,6 * 60 * 1000);
 
 function sound_links_selector() {
-	return 'a[href*="youtu"]';
+	return '.track a[href*="youtu"],.track a[href*="dailymotion"],.track a[href*="dai.ly"],.track a[href*="vimeo"]';
 }
 
 function find_all_sound_links() {
 	var soundlinks = jQuery(sound_links_selector());
+	console.log(soundlinks);
 	return soundlinks;
 }
 
@@ -195,7 +196,7 @@ jQuery(function() {
 		// on y met le premier son de la page
 		var soundlink = find_next_sound();
 		if (soundlink.length) {
-			var source = jQuery('<source src="'+soundlink.attr('href')+'" type="video/youtube">');
+			var source = jQuery('<source src="'+soundlink.attr('href')+'">');
 			jQuery('#player').append(source);
 			set_sound_playing(soundlink);
 			scroll_sound(soundlink);
