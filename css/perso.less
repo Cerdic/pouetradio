@@ -142,6 +142,26 @@
 		border-radius: 0;
 		border-top: 1px solid #ddd;
 	}
+	// Fix temporaire pour gnusocial
+	.oembed_link .oe-rich {
+		font-family: Arial,Helvetica,Sans-Serif;font-size: 1.0em;line-height: 1.5em;
+		display: block;
+		text-align: left;
+		padding: 15px;
+		&>a {float: right;color:#9baec8;}
+		&>a:active,&>a:focus,&>a:hover {text-decoration: underline !important;}
+		.oe-html {
+			display:block;
+			padding:0;
+			padding-left:63px;
+			margin: 0.75em 0 0.25em;
+			p {margin-bottom: 0.75em;}
+			p:last-child {margin-bottom: 0;}
+			a {background: transparent !important;text-decoration: none !important;}
+			a {color:#2b90d9;}
+			a:active,a:focus,a:hover {text-decoration: underline !important;}
+		}
+	}
 
 	.oembed blockquote {
 		border: 0;
