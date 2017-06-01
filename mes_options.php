@@ -1,6 +1,6 @@
 <?php
 
-define('_POUET_RADIO_VERSION','0.6.1');
+define('_POUET_RADIO_VERSION','0.6.2');
 
 
 $GLOBALS['spip_pipeline']['post_syndication'] .= '|pouet_post_syndication';
