@@ -1,7 +1,9 @@
 var played_history = []
 var affix_height = 0;
-var max_nb_refresh = 72; // 6H * 12
+var max_nb_refresh_init = 72; // 6H * 12 (6H apres le derniere lecture, il suffit de relancer une lecture pour relancer le refresher)
+var max_nb_refresh;
 var player;
+var refresher;
 
 /* Pagination infinie manuelle */
 function pagination_more_loading(url,href,options) {
@@ -43,10 +45,18 @@ function refresh_pouets() {
 	}
 	if (max_nb_refresh--<=0) {
 		clearInterval(refresher);
+		refresher = null;
 	}
 }
+
 // on refresh toutes les 6min
-var refresher = setInterval(refresh_pouets,6 * 60 * 1000);
+function start_refresher() {
+	max_nb_refresh = max_nb_refresh_init;
+	if (!refresher) {
+		refresher = setInterval(refresh_pouets,6 * 60 * 1000);
+	}
+}
+start_refresher();
 
 function sound_links_selector() {
 	return '.track a[href*="youtu"],.track a[href*="dailymotion"],.track a[href*="dai.ly"],.track a[href*="vimeo"]';
@@ -131,6 +141,7 @@ function play_sound(link) {
 	player.load();
 	set_sound_playing(link);
 	player.play();
+	start_refresher();
 }
 
 function play_next_sound() {
