@@ -127,6 +127,7 @@ function set_sound_playing(link) {
 	jQuery('a.playing').removeClass('playing');
 	link
 		.addClass('playing')
+		.focus()
 		.closest('.item')
 		.addClass('playing')
 		.siblings('.playing')
@@ -141,6 +142,7 @@ function play_sound(link) {
 	player.load();
 	set_sound_playing(link);
 	player.play();
+	link.focus();
 	start_refresher();
 }
 
@@ -170,7 +172,7 @@ function scroll_sound(soundlink) {
 	if (anchor.length) {
 		anchor.css('top','-'+affix_height+'px');
 		var id=anchor.attr('id');
-		jQuery.scrollTo('#'+id,400,{onAfter:function(){window.location.hash = id;}});
+		jQuery.scrollTo('#'+id,400,{onAfter:function(){window.location.hash = id;setTimeout(function(){soundlink.focus()},100);}});
 
 	}
 }
@@ -180,6 +182,59 @@ function check_sound_playing() {
 	// si le lien est encore en lecture au bout de 5s on le marque comme lu
 	setTimeout(function(){if (playing.is('.playing') && !player.paused) playing.addClass('played');}, 5000);
 
+}
+
+function on_sound_key_down(e) {
+	console.log('on_sound_key_down');
+	console.log(e.keyCode);
+	var keyActions = [
+			{
+					keys: [
+							32, // SPACE
+							179 // GOOGLE play/pause button
+						  ],
+					action: function(player) {
+						if (player.paused || player.ended) {
+							player.play();
+						} else {
+							player.pause();
+						}
+					}
+			},
+			{
+					keys: [
+							34, // Page Down
+						  78 // 'N'
+						  ],
+					action: function(player) {
+						play_next_sound();
+					}
+			},
+			{
+					keys: [
+							33, // Page Up
+						  80 // 'P'
+						  ],
+					action: function(player) {
+						play_prev_sound();
+					}
+			}
+	];
+
+	// find a matching key
+	for (var i = 0, il = keyActions.length; i < il; i++) {
+		var keyAction = keyActions[i];
+
+		for (var j = 0, jl = keyAction.keys.length; j < jl; j++) {
+			if (e.keyCode == keyAction.keys[j]) {
+				if (typeof(e.preventDefault) == "function") e.preventDefault();
+				keyAction.action(player, e.keyCode);
+				return false;
+			}
+		}
+	}
+
+	return true;
 }
 
 jQuery(function() {
@@ -231,11 +286,13 @@ jQuery(function() {
 			});
 
 		// on rend tous les liens clicables
-		jQuery('#content').on('click',sound_links_selector(),function(){
-			play_sound(jQuery(this));
-      return false;
-    });
-
+		jQuery('#content')
+			.on('click',sound_links_selector(),function(){
+				play_sound(jQuery(this));
+	      return false;
+	    })
+			// et sensible a la frappe clavier
+			.on('keydown',sound_links_selector(),on_sound_key_down);
 	}
 
 });
