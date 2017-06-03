@@ -207,7 +207,7 @@ function on_sound_key_down(e) {
 						  78 // 'N'
 						  ],
 					action: function(player) {
-						play_next_sound();
+						skip_to_next_sound();
 					}
 			},
 			{
