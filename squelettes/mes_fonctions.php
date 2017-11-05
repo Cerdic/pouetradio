@@ -11,12 +11,13 @@ function masto_tag2rssitems($url) {
 	include_spip('inc/distant');
 
 	$xml = "";
-	if ($res = recuperer_url($url)) {
-		$links = extraire_balises($res['page'], 'a');
+	if ($res = recuperer_url($url.".json")
+	  and $d = json_decode($res['page'], true)) {
+
+		$links = $d['orderedItems'];
 		foreach ($links as $link) {
-			$class = extraire_attribut($link,'class');
-			if (strpos($class, 'u-uid') !== false) {
-				$href = extraire_attribut($link,'href');
+			if (strpos($link,'://') !== false) {
+				$href = $link;
 				if (!isset($deja[$href])) {
 					$xml .= masto_url2item($href);
 					$deja[$href] = true;
@@ -24,7 +25,6 @@ function masto_tag2rssitems($url) {
 			}
 		}
 	}
-
 	return $xml;
 }
 
