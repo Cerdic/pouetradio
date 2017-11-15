@@ -1,0 +1,21 @@
+<paquet
+	prefix="pouetradio"
+	categorie="outil"
+	version="1.0.0"
+	etat="test"
+	compatibilite="[3.0.0;3.2.*]"
+	logo="pouetradio-32.png"
+	documentation=""
+>
+
+	<nom>PouetRadio</nom>
+
+	<auteur lien="https://www.nursit.com/Cedric-Morin">C&#233;dric</auteur>
+
+	<copyright>2017</copyright>
+	<licence lien="http://www.gnu.org/licenses/gpl-3.0.html">GPL 3</licence>
+
+	<pipeline nom="taches_generales_cron" inclure="pouetradio_fonctions.php" />
+
+</paquet>
+        
