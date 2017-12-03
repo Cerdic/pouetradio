@@ -59,7 +59,7 @@ function start_refresher() {
 start_refresher();
 
 function sound_links_selector() {
-	return '.track a[href*="youtu"],.track a[href*="dailymotion"],.track a[href*="dai.ly"],.track a[href*="vimeo"]';
+	return '.track a[href*="youtu"],a[href*="hooktube"],.track a[href*="dailymotion"],.track a[href*="dai.ly"],.track a[href*="vimeo"]';
 }
 
 function find_all_sound_links() {
@@ -138,6 +138,7 @@ function set_sound_playing(link) {
 function play_sound(link) {
 	var src = link.attr('href').replace('&amp;', '&');
 	src = src.replace('//m\.youtu','//www\.youtu');
+	src = src.replace('hooktube\.com','youtube\.com');
 	player.setSrc(src);
 	player.load();
 	set_sound_playing(link);

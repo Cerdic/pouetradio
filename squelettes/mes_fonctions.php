@@ -118,6 +118,7 @@ function critere_filtre_tags($idb, &$boucles, $crit) {
 	$champ_tags = $boucle->id_table.'.tags';
 	$w = array();
 	$w[] = "($champ_tags LIKE '.sql_quote('%youtu%').')";
+	$w[] = "($champ_tags LIKE '.sql_quote('%hooktube%').')";
 	$w[] = "($champ_tags LIKE '.sql_quote('%vimeo%').')";
 	$w[] = "($champ_tags LIKE '.sql_quote('%dailymotion.com%').')";
 	$w[] = "($champ_tags LIKE '.sql_quote('%dai.ly%').')";
