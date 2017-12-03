@@ -138,7 +138,8 @@ function set_sound_playing(link) {
 function play_sound(link) {
 	var src = link.attr('href').replace('&amp;', '&');
 	src = src.replace('//m\.youtu','//www\.youtu');
-	src = src.replace('hooktube\.com','youtube\.com');
+	src = src.replace('www\.hooktube\.com','www\.youtube\.com');
+	src = src.replace('hooktube\.com','www\.youtube\.com');
 	player.setSrc(src);
 	player.load();
 	set_sound_playing(link);
