@@ -351,12 +351,10 @@ function inserer_article_syndique($data, $now_id_syndic, $statut, $url_site, $ur
 		if (isset($data['raw_format'])) {
 			$vals['raw_format'] = $data['raw_format'];
 		}
-		if (isset($data['raw_methode'])) {
-			$vals['raw_methode'] = $data['raw_methode'];
+		if (!isset($data['raw_methode'])) {
+			$data['raw_methode'] = $methode_syndication;
 		}
-		else {
-			$vals['raw_methode'] = $methode_syndication;
-		}
+		$vals['raw_methode'] = $data['raw_methode'];
 	}
 
 	// Mettre a jour la date si lastbuilddate
