@@ -18,13 +18,15 @@ function pouet_post_syndication($flux) {
 		suivre_invalideur('syndication');
 		register_shutdown_function('pouet_reload_home');
 	}
-	
-	if (isset($flux['data']['raw_data']) and $flux['data']['raw_data']
+
+	if ($flux['args']['ajout']
+		and isset($flux['data']['raw_data']) and $flux['data']['raw_data']
 	  and isset($flux['data']['raw_methode']) and $flux['data']['raw_methode']=='mastodon') {
 		$raw = json_decode($flux['data']['raw_data'], true);
 		include_spip('inc/mastodon');
 
 		$account = mastodon_url2account($raw['account']['url']);
+		spip_log("pouet_post_syndication : follow $account", 'pouetradio');
 		mastodon_follow_if_not_already($account, array());
 
 	}
