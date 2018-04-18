@@ -1,0 +1,17 @@
+<paquet
+	prefix="syndic_etendue"
+	categorie="edition"
+	version="1.0.1"
+	etat="dev"
+	compatibilite="[3.1.0;3.2.*]"
+	logo="syndic_etendue-32.png"
+	schema="1.0.0"
+>
+
+	<nom>Syndication Etendue</nom>
+
+	<auteur>Collectif SPIP</auteur>
+
+	<necessite nom="sites" compatibilite="[1.9.25;1.*.*]" />
+
+</paquet>
