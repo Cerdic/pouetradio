@@ -1,6 +1,6 @@
 <?php
 
-define('_POUET_RADIO_VERSION','0.8.0');
+define('_POUET_RADIO_VERSION','0.9.0');
 define('_DIR_PLUGINS_SUPPL',_DIR_RACINE . 'squelettes/plugins/');
 
 
@@ -35,7 +35,7 @@ function pouet_post_syndication($flux) {
 }
 
 /**
- * Calculer content/home pour charger les oembed
+ * Calculer content/home pour generer les vignettes des users
  */
 function pouet_reload_home() {
 	chdir(_ROOT_CWD);
