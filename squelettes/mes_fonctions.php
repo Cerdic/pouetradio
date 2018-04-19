@@ -126,3 +126,18 @@ function critere_filtre_tags($idb, &$boucles, $crit) {
 	$w = "'(".implode(' OR ', $w).")'";
 	$boucle->where[] = $w;
 }
+
+
+function pouetradio_extraire_first_enclosure($tags) {
+	$links = extraire_balises($tags, 'a');
+	foreach ($links as $link) {
+		if (extraire_attribut($link, 'rel') == 'enclosure'
+		  and $type = extraire_attribut($link, 'type')
+		  and strncmp($type, 'image/', 6) == 0) {
+			$href = extraire_attribut($link, 'href');
+
+			return "<a href=\"$href\" type=\"$type\" class=\"toot-enclosure\"><span class=\"toot-enclosure-inner\" style=\"background-image:url('$href');\"></span></a>";
+		}
+	}
+	return '';
+}
