@@ -1,6 +1,6 @@
 <?php
 
-define('_POUET_RADIO_VERSION','0.9.1');
+define('_POUET_RADIO_VERSION','0.9.2');
 define('_DIR_PLUGINS_SUPPL',_DIR_RACINE . 'squelettes/plugins/');
 
 

@@ -187,7 +187,7 @@ function scroll_sound(soundlink) {
 function check_sound_playing() {
 	var playing = jQuery('a.playing');
 	// si on est playing c'est que le son est bon on peut annuler le watching
-	if (timeoutBadSound) {
+	if (timeoutBadSound && !player.paused) {
 		console.log('check_sound_playing, cancel watch_if_playable_sound');
 		clearTimeout(timeoutBadSound);
 		timeoutBadSound = null;
