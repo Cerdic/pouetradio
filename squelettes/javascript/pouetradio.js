@@ -187,10 +187,16 @@ function scroll_sound(soundlink) {
 function check_sound_playing() {
 	var playing = jQuery('a.playing');
 	// si on est playing c'est que le son est bon on peut annuler le watching
+	console.log('check_sound_playing, paused='+player.paused);
 	if (timeoutBadSound && !player.paused) {
-		console.log('check_sound_playing, cancel watch_if_playable_sound');
-		clearTimeout(timeoutBadSound);
-		timeoutBadSound = null;
+		setTimeout(function(){
+			console.log('check_sound_playing +1s, paused='+player.paused);
+			if (timeoutBadSound && playing.is('.playing') && !player.paused) {
+				console.log('check_sound_playing, cancel watch_if_playable_sound');
+				clearTimeout(timeoutBadSound);
+				timeoutBadSound = null;
+			}
+		},1000);
 	}
 	// si le lien est encore en lecture au bout de 5s on le marque comme lu
 	setTimeout(function(){if (playing.is('.playing') && !player.paused) playing.addClass('played');}, 5000);
@@ -199,7 +205,7 @@ function check_sound_playing() {
 function watch_if_playable_sound() {
 	console.log('watch_if_playable_sound');
 	if (timeoutBadSound) clearTimeout(timeoutBadSound);
-	timeoutBadSound = setTimeout(skip_unplayable_sound, 5000);
+	timeoutBadSound = setTimeout(skip_unplayable_sound, 7500);
 }
 function skip_unplayable_sound() {
 	console.log('skip_unplayable_sound');
