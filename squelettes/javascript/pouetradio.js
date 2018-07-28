@@ -144,8 +144,7 @@ function play_sound(link) {
 	player.setSrc(src);
 	player.load();
 	set_sound_playing(link);
-	player.play();
-	watch_if_playable_sound();
+	player_play();
 	link.focus();
 	start_refresher();
 }
@@ -204,11 +203,9 @@ function check_sound_playing() {
 
 function player_paused() {
 	console.log('player_paused');
-	// il faut annuler le watching car c'est l'utilisateur qui a arrete le player ?
-	if (timeoutBadSound) {
-		clearTimeout(timeoutBadSound);
-		timeoutBadSound = null;
-	}
+}
+function player_canplay() {
+	console.log('player_canplay');
 }
 
 function watch_if_playable_sound() {
@@ -222,6 +219,22 @@ function skip_unplayable_sound() {
 	skip_to_next_sound();
 }
 
+function player_pause(){
+	console.log('do player_pause');
+	// il faut annuler le watching car c'est l'utilisateur qui a arrete le player ?
+	if (timeoutBadSound) {
+		clearTimeout(timeoutBadSound);
+		timeoutBadSound = null;
+	}
+	player.pause();
+}
+
+function player_play(){
+	console.log('do player_play');
+	player.play();
+	watch_if_playable_sound();
+}
+
 function on_sound_key_down(e) {
 	console.log('on_sound_key_down');
 	console.log(e.keyCode);
@@ -233,9 +246,9 @@ function on_sound_key_down(e) {
 						  ],
 					action: function(player) {
 						if (player.paused || player.ended) {
-							player.play();
+							player_play();
 						} else {
-							player.pause();
+							player_pause();
 						}
 					}
 			},
@@ -319,6 +332,7 @@ jQuery(function() {
 				success:function(p,node) {
 					player = p;
 					player.addEventListener('ended',play_next_sound);
+					player.addEventListener('canplay',player_canplay);
 					player.addEventListener('playing',check_sound_playing);
 					player.addEventListener('pause',player_paused);
 				}
