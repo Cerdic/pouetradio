@@ -4,6 +4,7 @@ var max_nb_refresh_init = 72; // 6H * 12 (6H apres le derniere lecture, il suffi
 var max_nb_refresh;
 var player;
 var refresher;
+var timeoutBadSound;
 
 /* Pagination infinie manuelle */
 function pagination_more_loading(url,href,options) {
@@ -144,6 +145,7 @@ function play_sound(link) {
 	player.load();
 	set_sound_playing(link);
 	player.play();
+	watch_if_playable_sound();
 	link.focus();
 	start_refresher();
 }
@@ -164,6 +166,9 @@ function play_prev_sound() {
 	if (played_history.length>1) {
 		played_history.pop().removeClass('played'); // current playing
 		var soundlink = played_history.pop();
+		while (soundlink.is('.unplayable')) {
+			var soundlink = played_history.pop();
+		}
 		play_sound(soundlink);
 		scroll_sound(soundlink);
 	}
@@ -181,9 +186,25 @@ function scroll_sound(soundlink) {
 
 function check_sound_playing() {
 	var playing = jQuery('a.playing');
+	// si on est playing c'est que le son est bon on peut annuler le watching
+	if (timeoutBadSound) {
+		console.log('check_sound_playing, cancel watch_if_playable_sound');
+		clearTimeout(timeoutBadSound);
+		timeoutBadSound = null;
+	}
 	// si le lien est encore en lecture au bout de 5s on le marque comme lu
 	setTimeout(function(){if (playing.is('.playing') && !player.paused) playing.addClass('played');}, 5000);
+}
 
+function watch_if_playable_sound() {
+	console.log('watch_if_playable_sound');
+	if (timeoutBadSound) clearTimeout(timeoutBadSound);
+	timeoutBadSound = setTimeout(skip_unplayable_sound, 5000);
+}
+function skip_unplayable_sound() {
+	console.log('skip_unplayable_sound');
+	jQuery('a.playing').addClass('unplayable');
+	skip_to_next_sound();
 }
 
 function on_sound_key_down(e) {
