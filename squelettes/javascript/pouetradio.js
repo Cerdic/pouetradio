@@ -202,6 +202,15 @@ function check_sound_playing() {
 	setTimeout(function(){if (playing.is('.playing') && !player.paused) playing.addClass('played');}, 5000);
 }
 
+function player_paused() {
+	console.log('player_paused');
+	// il faut annuler le watching car c'est l'utilisateur qui a arrete le player ?
+	if (timeoutBadSound) {
+		clearTimeout(timeoutBadSound);
+		timeoutBadSound = null;
+	}
+}
+
 function watch_if_playable_sound() {
 	console.log('watch_if_playable_sound');
 	if (timeoutBadSound) clearTimeout(timeoutBadSound);
@@ -311,6 +320,7 @@ jQuery(function() {
 					player = p;
 					player.addEventListener('ended',play_next_sound);
 					player.addEventListener('playing',check_sound_playing);
+					player.addEventListener('pause',player_paused);
 				}
 			});
 
