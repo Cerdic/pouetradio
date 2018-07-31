@@ -124,8 +124,19 @@ function pouetradio_is_playable_peertube($link, $fast, $parts) {
 	$src =  $host . '/static/webseed/' . $video_id . '-240.mp4';
 	$thumb = $host . '/static/thumbnails/' . $video_id . '.jpg';
 
+	$api_url = $host . '/api/v1/videos/' . $video_id;
+	if (!function_exists('calculer_cle_action')) {
+		include_spip("inc/securiser_action");
+	}
+	$cle = calculer_cle_action("peertube:" . $api_url);
+
+	$api_url = url_absolue(_DIR_RACINE . "peertube.api/$cle/".base64_encode($api_url));
+	// todo : lancer un curl async de mise en cache
+
+	$link = inserer_attribut($link, 'data-api', $api_url);
+	// en fallback si pas de reponse de l'api
 	$link = inserer_attribut($link, 'data-src', $src);
-	$link = inserer_attribut($link, 'data-thumb', $thumb);
+	//$link = inserer_attribut($link, 'data-thumb', $thumb);
 	return $link;
 }
 
