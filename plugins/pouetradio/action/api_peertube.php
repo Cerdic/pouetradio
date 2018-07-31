@@ -20,7 +20,7 @@ function action_api_peertube_dist() {
 	$cle = calculer_cle_action("peertube:" . $api_url);
 	$json = "{}";
 	if ($cle === reset($arg)) {
-		var_dump($api_url);
+		//var_dump($api_url);
 
 		include_spip('inc/distant');
 		$res = recuperer_url_cache($api_url);
