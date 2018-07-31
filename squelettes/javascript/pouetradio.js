@@ -141,6 +141,9 @@ function play_sound(link) {
 	if (link.is('.playable.peertube')
 		&& !link.is('.peertube-fetched')
 	  && (url_api = link.attr('data-api'))) {
+		if (!player.paused) {
+			player.pause();
+		}
 		set_sound_playing(link);
 		watch_if_playable_sound();
 		jQuery.ajax({
