@@ -138,14 +138,50 @@ function set_sound_playing(link) {
 
 function play_sound(link) {
 	var src;
-	if (!(src = link.attr('data-src'))) {
-		src = link.attr('href');
+	if (link.is('.playable.peertube') && !link.is('.peertube-fetched')) {
+		var url_api = link.attr('href');
+		url_api = url_api.replace('/videos/watch/','/api/v1/videos/');
+		set_sound_playing(link);
+		watch_if_playable_sound();
+		jQuery.ajax({
+			url: url_api,
+			dataType: 'json'
+		}).done(function(data) {
+			link.addClass('peertube-fetched');
+			if (data.files) {
+				var file_lowres = data.files.pop();
+				if (file_lowres && file_lowres.fileUrl) {
+					src = file_lowres.fileUrl;
+					src = src.replace('&amp;', '&');
+					console.log('Peertube : url '+src);
+					link.attr('data-src', src);
+					player.setSrc(src);
+					player.load();
+					player_play();
+					return;
+				}
+			}
+			// it's a fail on fallback sur le data-src hypothetique
+			if (src = link.attr('data-src')) {
+				src = src.replace('&amp;', '&');
+				player.setSrc(src);
+				player.load();
+			}
+			else {
+				skip_to_next_sound();
+			}
+		});
 	}
-	src = src.replace('&amp;', '&');
-	player.setSrc(src);
-	player.load();
-	set_sound_playing(link);
-	player_play();
+	else {
+		if (!(src = link.attr('data-src'))) {
+			src = link.attr('href');
+		}
+		src = src.replace('&amp;', '&');
+		player.setSrc(src);
+		player.load();
+		set_sound_playing(link);
+		player_play();
+	}
 	link.focus();
 	start_refresher();
 }
