@@ -30,6 +30,6 @@ function action_api_peertube_dist() {
 	}
 
 	include_spip('inc/actions');
-	ajax_retour($json,"content-type: application/json; charset=utf-8");
+	ajax_retour($json,"application/json");
 
 }
