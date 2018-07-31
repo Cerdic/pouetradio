@@ -137,10 +137,10 @@ function set_sound_playing(link) {
 }
 
 function play_sound(link) {
-	var src;
-	if (link.is('.playable.peertube') && !link.is('.peertube-fetched')) {
-		var url_api = link.attr('href');
-		url_api = url_api.replace('/videos/watch/','/api/v1/videos/');
+	var src, url_api;
+	if (link.is('.playable.peertube')
+		&& !link.is('.peertube-fetched')
+	  && (url_api = link.attr('data-api'))) {
 		set_sound_playing(link);
 		watch_if_playable_sound();
 		jQuery.ajax({
