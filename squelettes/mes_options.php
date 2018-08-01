@@ -3,6 +3,7 @@
 define('_POUET_RADIO_VERSION','1.2.0');
 define('_DIR_PLUGINS_SUPPL',_DIR_RACINE . 'squelettes/plugins/');
 define('_PERIODE_SYNDICATION', 3);
+define('_YOUTUBE_AUTO_EXPAND_MP4', true);
 
 
 $GLOBALS['spip_pipeline']['post_syndication'] .= '|pouet_post_syndication';

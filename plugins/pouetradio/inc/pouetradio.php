@@ -153,7 +153,13 @@ function pouetradio_is_playable_youtu_be($link, $fast, $parts) {
 		return true;
 	}
 	// on expand le lien au passage, ca jouera plus vite
-	$src = "https://www.youtube.com/watch?v=" . ltrim($parts['path'],'/');
+	if (!defined('_YOUTUBE_AUTO_EXPAND_MP4') or !_YOUTUBE_AUTO_EXPAND_MP4) {
+		$src = "https://www.youtube.com/watch?v=" . ltrim($parts['path'],'/');
+	}
+	else {
+		// branchement sur la lib https://github.com/jeckman/YouTube-Downloader qui redirige vers le mp4 final
+		$src = url_absolue(_DIR_RACINE . 'youtube.api/'. ltrim($parts['path'],'/') .'.mp4');
+	}
 	$link = inserer_attribut($link, 'data-src', $src);
 	return $link;
 }
@@ -176,7 +182,13 @@ function pouetradio_is_playable_youtube_com($link, $fast, $parts) {
 		return true;
 	}
 	// on expand le lien au passage, ca jouera plus vite
-	$src = "https://www.youtube.com/watch?v=" . $v;
+	if (!defined('_YOUTUBE_AUTO_EXPAND_MP4') or !_YOUTUBE_AUTO_EXPAND_MP4) {
+		$src = "https://www.youtube.com/watch?v=" . $v;
+	}
+	else {
+		// branchement sur la lib https://github.com/jeckman/YouTube-Downloader qui redirige vers le mp4 final
+		$src = url_absolue(_DIR_RACINE . 'youtube.api/' . $v . '.mp4');
+	}
 	$link = inserer_attribut($link, 'data-src', $src);
 	return $link;
 }
