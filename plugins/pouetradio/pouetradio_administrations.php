@@ -25,7 +25,7 @@ function pouetradio_upgrade($nom_meta_base_version,$version_cible){
 	$maj['1.0.0'] = array(
 		array('sql_alter',"TABLE spip_syndic_articles ADD playable TINYINT DEFAULT 0 NOT NULL"),
 	);
-	$maj['1.1.1'] = array(
+	$maj['1.1.2'] = array(
 		array('sql_updateq',"spip_syndic_articles", array('playable'=>-1), "playable=0"),
 		array('pouetradio_make_playables'),
 	);

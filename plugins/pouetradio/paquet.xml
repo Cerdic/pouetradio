@@ -6,7 +6,7 @@
 	compatibilite="[3.0.0;3.2.*]"
 	logo="pouetradio-32.png"
 	documentation=""
-	schema="1.1.1"
+	schema="1.1.2"
 >
 
 	<nom>PouetRadio</nom>
@@ -16,6 +16,7 @@
 	<copyright>2017</copyright>
 	<licence lien="http://www.gnu.org/licenses/gpl-3.0.html">GPL 3</licence>
 
+	<pipeline nom="post_syndication" inclure="pouetradio_fonctions.php" />
 	<pipeline nom="taches_generales_cron" inclure="pouetradio_fonctions.php" />
 
 </paquet>
