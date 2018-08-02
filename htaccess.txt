@@ -45,7 +45,7 @@ RewriteRule ^(.*) - [E=BASE:%1]
 ################ REGLAGES PERSONNALISES ######################
 # Inscrivez ci-dessous vos reglages supplementaires
 
-RewriteRule ^youtube.api/(.+)\.mp4$ squelettes/plugins/yt/getvideo.php?videoid=$1&format=ipad [QSA,L]
+RewriteRule ^youtube.api/([^/]+)\.mp4$ squelettes/lib/yt/getvideo.php?videoid=$1&format=ipad [QSA,L]
 
 
 ################ GESTIONS DES URLS SPIP #######################

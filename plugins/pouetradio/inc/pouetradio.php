@@ -156,12 +156,17 @@ function pouetradio_is_playable_youtu_be($link, $fast, $parts) {
 		return true;
 	}
 	// on expand le lien au passage, ca jouera plus vite
+	$video_id = ltrim($parts['path'],'/');
 	if (!defined('_YOUTUBE_AUTO_EXPAND_MP4') or !_YOUTUBE_AUTO_EXPAND_MP4) {
-		$src = "https://www.youtube.com/watch?v=" . ltrim($parts['path'],'/');
+		$src = "https://www.youtube.com/watch?v=$video_id";
 	}
 	else {
 		// branchement sur la lib https://github.com/jeckman/YouTube-Downloader qui redirige vers le mp4 final
-		$src = url_absolue(_DIR_RACINE . 'youtube.api/'. ltrim($parts['path'],'/') .'.mp4');
+		if (!function_exists('calculer_cle_action')) {
+			include_spip("inc/securiser_action");
+		}
+		$cle = calculer_cle_action("youtube:" . $video_id);
+		$src = url_absolue(_DIR_RACINE . "youtube.api/$cle/$video_id" . '.mp4');
 	}
 	$link = inserer_attribut($link, 'data-src', $src);
 	return $link;
@@ -178,7 +183,7 @@ function pouetradio_is_playable_youtube_com($link, $fast, $parts) {
 	if ($parts['path'] !== '/watch') {
 		return false;
 	}
-	if (!$v = parametre_url($parts['path'] . '?' . $parts['query'], 'v')) {
+	if (!$video_id = parametre_url($parts['path'] . '?' . $parts['query'], 'v')) {
 		return false;
 	}
 	if ($fast) {
@@ -186,11 +191,15 @@ function pouetradio_is_playable_youtube_com($link, $fast, $parts) {
 	}
 	// on expand le lien au passage, ca jouera plus vite
 	if (!defined('_YOUTUBE_AUTO_EXPAND_MP4') or !_YOUTUBE_AUTO_EXPAND_MP4) {
-		$src = "https://www.youtube.com/watch?v=" . $v;
+		$src = "https://www.youtube.com/watch?v=$video_id";
 	}
 	else {
 		// branchement sur la lib https://github.com/jeckman/YouTube-Downloader qui redirige vers le mp4 final
-		$src = url_absolue(_DIR_RACINE . 'youtube.api/' . $v . '.mp4');
+		if (!function_exists('calculer_cle_action')) {
+			include_spip("inc/securiser_action");
+		}
+		$cle = calculer_cle_action("youtube:" . $video_id);
+		$src = url_absolue(_DIR_RACINE . "youtube.api/$cle/$video_id" . '.mp4');
 	}
 	$link = inserer_attribut($link, 'data-src', $src);
 	return $link;
