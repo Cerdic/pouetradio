@@ -105,38 +105,13 @@ function pouetradio_is_playable_peertube($link, $fast, $parts) {
 		return true;
 	}
 
-	$video_id = $m[1];
-
-	// TODO : utiliser l'API peertube pour recuperer la source mp4 sur une des instances peer ?
-	// mais c'est lent si le serveur distant rame
-	// --> on fait le remaping ici en dur et on laisse le JS charger ou gerer le fail si ca vient pas
-
-	// $endpoint = "https://" . $parts['host'] . '/api/v1/';
-	// include_spip('inc/distant');
-	// $res = recuperer_url($endpoint . "videos/$video_id");
-	// puis regarder dans file
-	// https://xxxx/static/webseed/a5c7839a-3b09-474c-a7bb-825152bcbf9d-360.mp4"
-	// https://xxxx/download/videos/a5c7839a-3b09-474c-a7bb-825152bcbf9d-360.mp4"
-	// https://xxxx/static/thumbnails/a5c7839a-3b09-474c-a7bb-825152bcbf9d.jpg
-	$src = extraire_attribut($link, 'href');
-	$src = explode('/videos/watch/', $src);
-	$host = reset($src);
-	$src =  $host . '/static/webseed/' . $video_id . '-240.mp4';
-	$thumb = $host . '/static/thumbnails/' . $video_id . '.jpg';
-
-	$api_url = $host . '/api/v1/videos/' . $video_id;
 	if (!function_exists('calculer_cle_action')) {
 		include_spip("inc/securiser_action");
 	}
-	$cle = calculer_cle_action("peertube:" . $api_url);
-
-	$api_url = url_absolue(_DIR_RACINE . "peertube.api/$cle/".base64_encode($api_url));
-	// todo : lancer un curl async de mise en cache
-
-	$link = inserer_attribut($link, 'data-api', $api_url);
-	// en fallback si pas de reponse de l'api
+	$src = extraire_attribut($link, 'href');
+	$cle = calculer_cle_action("peertube:" . $src);
+	$src = url_absolue(_DIR_RACINE . "peertube.api/$cle/".base64_encode($src));
 	$link = inserer_attribut($link, 'data-src', $src);
-	//$link = inserer_attribut($link, 'data-thumb', $thumb);
 	return $link;
 }
 
