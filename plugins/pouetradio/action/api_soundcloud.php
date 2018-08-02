@@ -12,7 +12,9 @@ function action_api_soundcloud_dist() {
 	$arg = _request('arg');
 	$arg = explode('/', $arg);
 
-	$soundcloud_url = base64_decode(end($arg));
+	// enlever une fausse extension .mp3
+	$soundcloud_url = preg_replace(',\.\w+$,', '', end($arg));
+	$soundcloud_url = base64_decode($soundcloud_url);
 	if (!function_exists('calculer_cle_action')) {
 		include_spip("inc/securiser_action");
 	}
