@@ -142,6 +142,31 @@ function pouetradio_is_playable_peertube($link, $fast, $parts) {
 
 
 /**
+ * soundcloud.com
+ * @param $link
+ * @param $fast
+ * @param $parts
+ * @return bool|string
+ */
+function pouetradio_is_playable_soundcloud_com($link, $fast, $parts) {
+	if (count(explode('/', trim($parts['path'],'/'))) !== 2) {
+		return false;
+	}
+	if ($fast) {
+		return true;
+	}
+
+	if (!function_exists('calculer_cle_action')) {
+		include_spip("inc/securiser_action");
+	}
+	$src = extraire_attribut($link, 'href');
+	$cle = calculer_cle_action("soundcloud:" . $src);
+	$src = url_absolue(_DIR_RACINE . "soundcloud.api/$cle/".base64_encode($src));
+	$link = inserer_attribut($link, 'data-src', $src);
+	return $link;
+}
+
+/**
  * youtu.be
  * @param $link
  * @param $fast
