@@ -1,6 +1,6 @@
 <?php
 
-define('_POUET_RADIO_VERSION','1.3.0');
+define('_POUET_RADIO_VERSION','1.4.0');
 define('_DIR_PLUGINS_SUPPL',_DIR_RACINE . 'squelettes/plugins/');
 define('_PERIODE_SYNDICATION', 3);
 define('_YOUTUBE_AUTO_EXPAND_MP4', true);
