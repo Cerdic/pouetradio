@@ -314,7 +314,11 @@ jQuery(function() {
 		// on y met le premier son de la page
 		var soundlink = find_next_sound();
 		if (soundlink.length) {
-			var source = jQuery('<source src="'+soundlink.attr('href')+'">');
+			var src = soundlink.attr('data-src');
+			if (!src) {
+				src = soundlink.attr('href');
+			}
+			var source = jQuery('<source src="' + src + '">');
 			jQuery('#player').append(source);
 			set_sound_playing(soundlink);
 			scroll_sound(soundlink);
