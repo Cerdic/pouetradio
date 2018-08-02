@@ -149,6 +149,9 @@ function pouetradio_is_playable_peertube($link, $fast, $parts) {
  * @return bool|string
  */
 function pouetradio_is_playable_soundcloud_com($link, $fast, $parts) {
+	if (!defined('_SOUNDCLOUD_CLIENT_ID')) {
+		return false;
+	}
 	if (count(explode('/', trim($parts['path'],'/'))) !== 2) {
 		return false;
 	}
