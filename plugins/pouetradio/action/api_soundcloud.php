@@ -24,11 +24,11 @@ function action_api_soundcloud_dist() {
 		$api_url = "http://api.soundcloud.com/resolve?client_id="._SOUNDCLOUD_CLIENT_ID;
 		$api_url = parametre_url($api_url, "url", $soundcloud_url);
 		include_spip('inc/distant');
-		$res = recuperer_url($api_url, array('methode' => 'HEAD', 'follow_location' => 0));
+		$res = recuperer_url_cache($api_url, array('methode' => 'HEAD', 'follow_location' => 0));
 		if ($res and $res['location']) {
 			$tracks_url = $res['location'];
 			$stream_url = str_replace("?", "/stream?", $tracks_url);
-			$res = recuperer_url($stream_url, array('methode' => 'HEAD', 'follow_location' => 0));
+			$res = recuperer_url_cache($stream_url, array('methode' => 'HEAD', 'follow_location' => 0));
 			$media_url = $res['location'];
 			if ($res and $res['location']) {
 				include_spip('inc/headers');
