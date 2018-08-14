@@ -29,7 +29,7 @@ function pouetradio_upgrade($nom_meta_base_version,$version_cible){
 		array('sql_updateq',"spip_syndic_articles", array('playable'=>-1), "playable=0"),
 		array('pouetradio_make_playables'),
 	);
-	$maj['1.1.4'] = array(
+	$maj['1.1.5'] = array(
 		array('sql_updateq',"spip_syndic_articles", array('playable'=>-1), "tags like '%soundcloud%'"),
 		array('pouetradio_make_playables'),
 	);
