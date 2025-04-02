@@ -3,7 +3,7 @@
 	categorie="outil"
 	version="1.0.1"
 	etat="test"
-	compatibilite="[3.0.0;4.2.*]"
+	compatibilite="[3.0.0;4.*]"
 	logo="pouetradio-32.png"
 	documentation=""
 	schema="1.1.5"
